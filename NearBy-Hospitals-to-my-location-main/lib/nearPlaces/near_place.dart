@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 
 class NearByPlaces extends StatefulWidget {
@@ -396,14 +397,12 @@ class _NearByPlacesState extends State<NearByPlaces> {
   @override
   void initState() {
     fetchAlbum();
-
     // TODO: implement initState
   }
 
 
   Future fetchAlbum() async {
     try {
-
       print('okkkkk');
       final client = http.Client();
 
@@ -453,10 +452,6 @@ class _NearByPlacesState extends State<NearByPlaces> {
       print(e);
     }
   }
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -516,6 +511,13 @@ class _NearByPlacesState extends State<NearByPlaces> {
             child: Text("${jsonResponse["results"][index]["vicinity"].toString()}", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.black),)),
                             ],
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Icon(Icons.share_location_sharp,color: Colors.green,),
+                              Text("${((Geolocator.distanceBetween(double.parse(widget.lati), double.parse(widget.longi), jsonResponse["results"][index]['geometry']['location']['lat'], jsonResponse["results"][index]['geometry']['location']['lng']))/1000).toStringAsFixed(2) } km")
+                            ],
+                          )
                         ],
                       ),
                     ),
