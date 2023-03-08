@@ -432,8 +432,7 @@ class _NearByPlacesState extends State<NearByPlaces> {
       print("okkkkkkk 2");
 
       setState(() {
-        // TODO : Uncomment this part
-        // jsonResponse = jsonDecode(response.body);
+        jsonResponse = jsonDecode(response.body);
       });
 
       if (response.statusCode == 200) {
