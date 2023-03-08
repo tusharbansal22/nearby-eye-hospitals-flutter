@@ -433,7 +433,8 @@ class _NearByPlacesState extends State<NearByPlaces> {
       print("okkkkkkk 2");
 
       setState(() {
-        jsonResponse = jsonDecode(response.body);
+        // TODO : Uncomment this part
+        // jsonResponse = jsonDecode(response.body);
       });
 
       if (response.statusCode == 200) {
@@ -471,34 +472,52 @@ class _NearByPlacesState extends State<NearByPlaces> {
               crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Card(
-                    color: index%2==0? Colors.orange.withOpacity(0.1): Colors.purpleAccent.withOpacity(0.1),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-
-                            Text(jsonResponse["results"][index]["name"], style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                          ],
-                        ),
-                        SizedBox(width: 50,height: 10,),
-                        Row(
-                          children: [
-                            Text("Rating: ${jsonResponse["results"][index]["rating"].toString()}", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
-                            SizedBox(width: 50,),
-                            jsonResponse["results"][index]["opening_hours"]["open_now"]? Text("Open Now", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Colors.green),):
-                            Text("Close", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Colors.red),),
-                          ],
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Address: ", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold),),
+                    color: Colors.white,
+                    elevation: 5,
+                    child: Container(
+                      padding: EdgeInsets.all(15),
+                      height: 220,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Container(
+                            alignment:Alignment.centerRight,
+                            child: jsonResponse["results"][index]["opening_hours"]["open_now"]? Container(
+                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
+                                decoration: BoxDecoration(color: Colors.green.shade50, borderRadius: BorderRadius.circular(20)),
+                                child: Text("Open", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Colors.green),)):
                             Container(
-                                width: MediaQuery.of(context).size.width*0.7,
-            child: Text("${jsonResponse["results"][index]["vicinity"].toString()}", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.deepPurpleAccent),)),
-                          ],
-                        ),
-                      ],
+                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 4),
+                                decoration: BoxDecoration(color: Colors.red.shade50, borderRadius: BorderRadius.circular(20)),
+                                child: Text("Closed", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold, color: Colors.red),)),
+                          ),
+                          Row(
+                            children: [
+
+                              Text(jsonResponse["results"][index]["name"], style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                            ],
+                          ),
+                          SizedBox(width: 50,height: 10,),
+                          Row(
+                            children: [
+                              Icon(Icons.star,color: Colors.yellow.shade700,),
+                              Text("   ${jsonResponse["results"][index]["rating"].toString()}", style: TextStyle(fontSize: 14,fontWeight: FontWeight.w500),),
+
+                            ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(Icons.location_on_outlined , color: Colors.blue.shade900,),
+                              SizedBox(width: 10,),
+                              Container(
+                                  width: MediaQuery.of(context).size.width*0.7,
+            child: Text("${jsonResponse["results"][index]["vicinity"].toString()}", style: TextStyle(fontSize: 14,fontWeight: FontWeight.bold,color: Colors.black),)),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
